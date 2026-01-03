@@ -12,7 +12,10 @@ def main():
     dice_info = dice_to_roll.split("d")
     if not len(dice_info) == 2:
         raise ValueError("Incorrect dice info")
-    result = rollMultipleAccumulate(int(dice_info[0]), int(dice_info[1]))
+
+    number = int(dice_info[0]) if dice_info[0] else 1
+    dimensions = int(dice_info[1])
+    result = rollMultipleAccumulate(number, dimensions)
     print(f"{dice_to_roll} roll result: {result}")
 
 

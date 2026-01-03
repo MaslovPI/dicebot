@@ -1,5 +1,5 @@
 import argparse
-from functions.roll import rollMultipleAccumulate
+from functions.roll import roll_multiple
 
 
 def main():
@@ -15,8 +15,8 @@ def main():
 
     number = int(dice_info[0]) if dice_info[0] else 1
     dimensions = int(dice_info[1])
-    result = rollMultipleAccumulate(number, dimensions)
-    print(f"{dice_to_roll} roll result: {result}")
+    result = roll_multiple(number, dimensions)
+    print(f"{dice_to_roll} roll result: {result.describe()}")
 
 
 if __name__ == "__main__":

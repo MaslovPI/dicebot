@@ -4,6 +4,7 @@ import discord
 
 from dotenv import load_dotenv
 from functions.roll import roll_multiple
+from discord.ext import commands
 
 
 def main():
@@ -13,21 +14,14 @@ def main():
         raise ValueError("Discord token is not provided")
     intents = discord.Intents()
     intents.message_content = True
-    client = discord.Client(intents=intents)
 
-    @client.event
+    bot = commands.Bot(command_prefix="/", intents=intents)
+
+    @bot.event
     async def on_ready():
-        print(f"{client.user} has connected to Discord!")
+        print(f"{bot.user} has connected to Discord!")
 
-    client.run(str(TOKEN))
-
-    # parser = argparse.ArgumentParser(description="Dice roller")
-    # parser.add_argument(
-    #     "dice_to_roll", type=str, help="Dices to roll in (number)d(sides) notation"
-    # )
-    # args = parser.parse_args()
-    # dice_to_roll = args.dice_to_roll
-    # print(roll_dice(dice_to_roll))
+    bot.run(str(TOKEN))
 
 
 def roll_dice(dice_to_roll):

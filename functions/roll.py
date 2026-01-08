@@ -16,11 +16,14 @@ def roll_multiple(number, dimensions):
 
 
 def roll_dice(dice_to_roll):
-    dice_info = dice_to_roll.split("d")
-    if not len(dice_info) == 2:
-        return "Invalid format. Use NdM (e.g. 2d6)"
+    try:
+        dice_info = dice_to_roll.split("d")
+        if not len(dice_info) == 2:
+            return "Invalid format. Use NdM (e.g. 2d6)"
 
-    number = int(dice_info[0]) if dice_info[0] else 1
-    dimensions = int(dice_info[1])
-    result = roll_multiple(number, dimensions)
-    return f"{dice_to_roll} roll result: {result.describe()}"
+        number = int(dice_info[0]) if dice_info[0] else 1
+        dimensions = int(dice_info[1])
+        result = roll_multiple(number, dimensions)
+        return f"{dice_to_roll} roll result: {result.describe()}"
+    except Exception as e:
+        return f"Exception: {e}"

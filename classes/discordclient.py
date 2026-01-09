@@ -1,6 +1,13 @@
+import logging
+
 import discord
 from discord.ext import commands
+
+from functions.logging import configure_logger
 from functions.roll import roll_dice
+
+logger = logging.getLogger(__name__)
+configure_logger(logger)
 
 
 class DiscordClient(commands.Bot):
@@ -17,9 +24,14 @@ class DiscordClient(commands.Bot):
         )
         async def roll(interaction: discord.Interaction, dice: str):
             try:
+                logger.debug(f"Roll called by user: {interaction.user}")
                 result = roll_dice(dice)
+                logger.debug(f"Roll results: {result}")
             except ValueError as e:
-                await interaction.response.send_message(f"❌ {e}", ephemeral=True)
+                logger.exception(e)
+                await interaction.response.send_message(
+                    "❌ Something went wrong. Check your inputs.", ephemeral=True
+                )
                 return
 
             await interaction.response.send_message(result)
@@ -27,7 +39,7 @@ class DiscordClient(commands.Bot):
         await self.tree.sync()
 
     async def on_ready(self):
-        print(f"{self.user} has connected to Discord!")
+        logger.info(f"{self.user} has connected to Discord!")
 
     def run_bot(self):
         self.run(self.token)
